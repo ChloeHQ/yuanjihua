@@ -78,7 +78,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .tab
 	display: flex
-	float: right
+	// float: right
 	height: 60px
 	line-height: 60px
 	.tag-item

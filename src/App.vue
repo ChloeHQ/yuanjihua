@@ -1,14 +1,21 @@
 <template>
   <div id="app">
-    <s-header></s-header>
-    <div class="content">
-  		<router-view></router-view>
-  	</div>
+    <section class="view">
+      <s-header></s-header>
+    </section>
+    <div class="replaceHeader"></div>
+    <section  class="content">
+		  <router-view class="view"></router-view>
+    </section>
   </div>
 </template>
 
 <script>
 import SHeader from '@/components/header/header'
+import 'common/style/media.styl'
+import 'common/style/reset.styl'
+import 'common/style/icon-fonts.styl'
+
 export default {
   name: 'App',
   components: { 
@@ -18,10 +25,16 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.content
-	position: relative
-	width: 1100px
-	top: 80px
-	margin: 0 auto
+  .replaceHeader
+      width: 100%;
+      height: 64px;
+      background-color: #fff;
+  .content
+    .view
+      position: static  
+      padding-bottom: 100px
+      margin: 0 auto
+      margin-top: 40px   
+    
 </style>
 

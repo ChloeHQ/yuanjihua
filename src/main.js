@@ -19,6 +19,7 @@ Object.defineProperties(Vue.prototype, {
   $bus: { get: () => EventBus }
 })
 
+// Vue.prototype.$axios= axios
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

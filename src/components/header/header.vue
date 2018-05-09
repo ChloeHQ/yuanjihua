@@ -33,7 +33,6 @@ export default {
   border-top: 1px solid #333
   height: 65px
   width: 100%
-  background: #fafafa
   box-shadow: 0 2px 10px 0 rgba(0,0,0,.1), 0 1px rgba(0,0,0,.1)
   &:after
     display: block
@@ -41,19 +40,22 @@ export default {
     content: ""
     height: 0
   .view
-    width: 1100px
     margin: 0 auto
     .logo-box
       float: left
+      cursor: pointer
       .logo
         float: left
         height: 60px
       .m-title
         float: left
+        color: #050505
         line-height: 65px
         font-size: 26px
         font-weight: bold
         vertical-align: baseline
+    .nav
+      float: right
 
       
     
