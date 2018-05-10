@@ -6,12 +6,14 @@
           <img class="avatar" src="./data@3x.png"/>
         </div>
       </template>
-      <el-menu-item index="1-1">个人中心</el-menu-item>
-      <el-menu-item index="1-2">修改密码</el-menu-item>
-      <el-menu-item index="1-3">我的帖子</el-menu-item>
-      <el-menu-item index="1-3">我的收藏</el-menu-item>
-      <el-menu-item index="1-3">我的任务</el-menu-item>
-      <el-menu-item index="1-4" @click="iclick">退出</el-menu-item>
+      <div class="link-box">
+        <el-menu-item index="/personalcenter/profile">个人中心</el-menu-item>
+        <el-menu-item index="/personalcenter/resetpwd" >修改密码</el-menu-item>
+        <el-menu-item index="/personalcenter/posts" >我的帖子</el-menu-item>
+        <el-menu-item index="/personalcenter/favorites" >我的收藏</el-menu-item>
+        <el-menu-item index="/personalcenter/messages">我的任务</el-menu-item>
+        <el-menu-item index="1-4" @click="iclick">退出</el-menu-item>
+      </div>
     </el-submenu>
     </el-menu>
 </template>
@@ -24,8 +26,8 @@
       }
     },
     methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+      handleSelect(keyPath) {
+        this.$emit('link-to', keyPath)
       },
       iclick() {
         this.$emit('logout')
@@ -47,11 +49,17 @@
           width: 37px
           border-radius: 50%
           border: 1px solid #ccc
-      .el-menu-item
-        height: 28px;
-        line-height: 30px;
       &.is-active 
         .el-submenu__title
           border-bottom: none
-      
+  .el-menu
+    &.el-menu--popup
+      min-width: 120px
+    .link-box
+      .el-menu-item
+        height: 28px
+        line-height: 30px
+        font-weight: 500
+        &.is-active
+          color:#ea0f2d
 </style>

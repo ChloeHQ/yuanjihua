@@ -24,12 +24,9 @@
 		
 		<div class="tag-icon" v-if="hasLogged">
 			<!-- <div class="avatar"> -->
-				<my-center @logout="logOut()"></my-center>
+			<my-center @logout="logOut" @link-to="toPersonCenter"></my-center>
       <!-- </div> -->
 		</div>
-	<!-- 	<router-link tag="div" v-if="hasLogged" @click="logOut()" class="tag-item">
-			<span class="tab-link">退出</span>
-		</router-link> -->
 		<router-link tag="div" v-else class="tag-item" to="/register">
 			<span class="tab-link">注册</span>
 		</router-link>
@@ -43,6 +40,7 @@
 	export default {
 		data() {
 			return {
+				link:'',
 				hasLogged: this._checkToken()
 			}
 		},
@@ -52,21 +50,27 @@
 			})
 		},
 		beforeDestroy () {
-   	 this.$bus.$off('userLogin', this._handleLoginEvent)
-  	},
+	   	 	this.$bus.$off('userLogin', this._handleLoginEvent)
+	  	},
 		methods: {
+			toPersonCenter(path) {
+				console.log('parent', path)
+				this.$router.push(path)
+				this.$bus.$emit('centerPageTo', path)
+				
+			},
 			logOut () {
-	      this.$cookie.delete('token')
-	      deleteUserInfo()
-	      this._handleLoginEvent()
-	      this.$router.push('/')
-	    },
+		      this.$cookie.delete('token')
+		      deleteUserInfo()
+		      this._handleLoginEvent()
+		      this.$router.push('/')
+		    },
 			_handleLoginEvent(eventData) {
 				this.hasLogged = this._checkToken()	
 			},
 			_checkToken(){
 				const token = this.$cookie.get('token')
-      	return token ? true: false
+      			return token ? true: false
 			}
 		},
 		components: {

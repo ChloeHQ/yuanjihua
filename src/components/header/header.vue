@@ -30,6 +30,7 @@ export default {
 .header
   position: fixed
   z-index: 999
+  background: white
   border-top: 1px solid #333
   height: 65px
   width: 100%
