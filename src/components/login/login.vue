@@ -43,16 +43,16 @@ export default {
   },
   methods: {
     submit() {
-      console.log('submit!')
+      // console.log('submit!')
       let params = {
         'mobile': this.form.phoneNumber,
         'pwd': this.form.password
       }
       logIn(params).then((result) => {
-        console.log(result)
+        // console.log(result)
 
         if(result.status === STATUS){
-          console.log('success')
+          // console.log('success')
           let data = result.data[0]
           
           /*data数据内容

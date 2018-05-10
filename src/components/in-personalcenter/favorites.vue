@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import { getUserInfo } from 'common/js/userinfo'
+import { STATUS, getMyCollection } from 'api/userCenter'
 
 export default {
   data () {
@@ -31,27 +31,35 @@ export default {
     }
   },
   methods: {
-    async fetchFavoritesData () {
-      const rawRes = await axios.post('http://yjh.li-shang-bin.com/iweb/collect/myCollect', {
-        page: 1,
-        user_id: getUserInfo().user_id,
-        token: this.$cookie.get('token')
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    _fetchFavoritesData () {
+      let params = {
+        "page":1
+      }
+      getMyCollection(params).then(data => {
+        if(data.status === STATUS){
+          this.favoritesData = data.data
+        }else{
+          console.log(data)
         }
       })
-      if (rawRes.status === 1) {
-        return rawRes.data.list.data
-      }
-      return []
+      // const rawRes = await axios.post('http://yjh.li-shang-bin.com/iweb/collect/myCollect', {
+      //   page: 1,
+      //   user_id: getUserInfo().user_id,
+      //   token: this.$cookie.get('token')
+      // }, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // })
+      // if (rawRes.status === 1) {
+      //   return rawRes.data.list.data
+      // }
+      // return []
     }
   },
   mounted () {
     console.log('favorites mounted')
-    this.fetchFavoritesData().then((data) => {
-      this.favoritesData = data
-    })
+    this._fetchFavoritesData()
   }
 }
 </script>

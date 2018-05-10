@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import { getUserInfo } from 'common/js/userinfo'
+import {STATUS, getMyPosts } from 'api/userCenter'
 
 export default {
   data () {
@@ -31,23 +31,33 @@ export default {
     }
   },
   methods: {
-    async fetchPostsData () {
-      const rawRes = await axios.post('http://yjhapi.agxx.club/iweb/topic/myTopicList', {
-        user_id: getUserInfo().user_id,
-        page: 1,
-        token: this.$cookie.get('token')
-      })
-      if (rawRes.status === 1) {
-        return rawRes.data.list.data
+    _fetchPostsData() {
+      let params = {
+        page: 1
       }
-      return []
+      getMyPosts(params).then(data => {
+        if(data.status === STATUS) {
+          this.postsData = data.data
+        }else {
+          console.log(data)
+        }
+      })
     }
+    // async fetchPostsData () {
+    //   const rawRes = await axios.post('http://yjhapi.agxx.club/iweb/topic/myTopicList', {
+    //     user_id: getUserInfo().user_id,
+    //     page: 1,
+    //     token: this.$cookie.get('token')
+    //   })
+    //   if (rawRes.status === 1) {
+    //     return rawRes.data.list.data
+    //   }
+    //   return []
+    // }
   },
   mounted () {
     console.log('mounted')
-    this.fetchPostsData().then((data) => {
-      this.postsData = data
-    })
+    this._fetchPostsData()
   }
 }
 </script>

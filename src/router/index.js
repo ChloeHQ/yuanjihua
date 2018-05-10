@@ -12,6 +12,7 @@ import posts from 'components/in-personalcenter/posts'
 import favorites from 'components/in-personalcenter/favorites'
 import messages from 'components/in-personalcenter/messages'
 import tasks from 'components/in-personalcenter/tasks'
+import Article from 'components/article/article'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/article',
+      name: 'article',
+      component: Article
     },
     {
       path: '/write',
