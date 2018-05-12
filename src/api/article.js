@@ -24,4 +24,24 @@ export function getTopicList(params) {
 		    })
 }
 
+export function postArticle(params) {
+	let url = URL + 'writeArticle.php'
+	let defaultParam = {
+		content: '',
+		md_content:'hello world',                               //  话题内容md
+        user_id:'1',                                          //  用户id
+        nickname:'',                                           //  昵称,
+        type:"1",                                                //  一级分类 1.经验分享 2.入门学习 3.成果分享,
+        tech_type:"1",                                             //  技术分类 1.html 2.php 3.java
+        title:"hello world",                                                 //  标题
+        isEdit: false,     //是否为编辑状态
+        topic_id:  null             //如果编辑状态为true则加上文章id，false则可不填
+  }
+  let post_data = Object.assign({},defaultParam,params)
+  return axios.post(url,post_data).then(res => {
+  	console.log(res)
+  	return Promise.resolve(res.data)
+  })
+}
+
 
