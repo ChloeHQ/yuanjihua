@@ -8,7 +8,7 @@ const uid =  getUserInfo().user_id
 export function getMyCollection(params) {
 	let url = URL + 'myColl.php'
 	let defaultPara = {
-		user_id: uid,
+		user_id: -1,
 		page: null,   //页码
 	}
 	let finally_params = Object.assign({}, defaultPara, params)
@@ -16,10 +16,19 @@ export function getMyCollection(params) {
 	return axios.get(url, {
 		params: finally_params
 	}).then(res => {
+		console.log(res)
 		return Promise.resolve(res.data)
 	})
 }
 
+/*
+getMyPosts的response.
+data:
+		commentList:["3"]
+		data:(3) [{…}, {…}, {…}, __ob__: Observer]
+		info:"查询成功"
+		status:1
+*/
 export function getMyPosts(params) {
 	let url = URL + 'myNote.php'
 	let defaultPara = {
@@ -30,6 +39,7 @@ export function getMyPosts(params) {
 	return axios.get(url, {
 		params: finally_params
 	}).then(res => {
+		// console.log(res.data)
 		return Promise.resolve(res.data)
 	})
 }

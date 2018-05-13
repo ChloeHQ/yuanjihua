@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <el-header>我的收藏</el-header>
     <el-main>
       <el-table :data="favoritesData">
         <el-table-column prop="topic" label="主题" width="400">
@@ -21,25 +20,30 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { STATUS, getMyCollection } from 'api/userCenter'
+import { getUserInfo } from 'common/js/userinfo'
 
 export default {
   data () {
     return {
+      userinfo: null,
+      page: 1,
       favoritesData: []
     }
   },
   methods: {
     _fetchFavoritesData () {
       let params = {
-        "page":1
+        page: this.page,
+        user_id: this.userinfo.user_id
       }
       getMyCollection(params).then(data => {
+        console.log(data)
         if(data.status === STATUS){
           this.favoritesData = data.data
+          // console.log(this.favoritesData)
         }else{
-          console.log(data)
+          // console.log(data)
         }
       })
       // const rawRes = await axios.post('http://yjh.li-shang-bin.com/iweb/collect/myCollect', {
@@ -56,6 +60,9 @@ export default {
       // }
       // return []
     }
+  },
+  created() {
+    this.userinfo = getUserInfo()
   },
   mounted () {
     console.log('favorites mounted')

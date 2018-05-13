@@ -1,10 +1,10 @@
 <template>
 	<div class="write-wrraper">
-		<el-form ref="form" :model="form" label-width="80px">
+		<el-form ref="form" label-width="80px">
 			<section class="write-top">
 				<div class="content">
 					<el-form-item class="top-item top-title" label="文章标题">
-				   	 	<el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
+				   	 	<el-input v-model="title" placeholder="请输入文章标题"></el-input>
 				  	</el-form-item>
 					<el-form-item class="top-item top-cate" label="所属分类">
 					    <el-select v-model="type" placeholder="请选择文章分类">
@@ -41,11 +41,7 @@
 	export default {
 		data() {
 			return {
-				form: {
-					title: '',
-					cate: null,
-					tech_cate: null
-				},
+				title: '',
 				cate: [
 					{id: 1, desc: '经验分享'},
 					{id: 2, desc: '入门学习'},
@@ -56,8 +52,8 @@
 					{id: 2, desc: 'php'},
 					{id: 3, desc: 'java'}
 				],
-				type: 0,
-				tech_type: 0,
+				type: null,
+				tech_type: null,
 				md_text: '',
 				html_text: '',
 				userinfo: null
@@ -85,7 +81,21 @@
 	        topic_id:null
 				}
 				postArticle(post_data).then(data => {
-					console.log(data)
+					// console.log(data)
+					if(data.status === STATUS) {
+						this.$message({
+							message: data.info,
+							showClose: true,
+							type: 'success'
+						})
+						this.$router.push('/article')
+					}else{
+						this.$message({
+							message: data.info,
+							showClose: true,
+							type: 'error'
+						})
+					}
 				})
 			}
 		},

@@ -39,7 +39,6 @@ export function postArticle(params) {
   }
   let post_data = Object.assign({},defaultParam,params)
   return axios.post(url,post_data).then(res => {
-  	console.log(res)
   	return Promise.resolve(res.data)
   })
 }

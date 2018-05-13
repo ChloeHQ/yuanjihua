@@ -1,6 +1,6 @@
 <template>
-  <el-row :gutter="24" class="tac">
-    <el-col :offset="2" :span="4">
+  <el-row  class="tac">
+    <el-col :span="4">
       <el-menu
         router
         :default-active="activeIndex"
@@ -13,13 +13,15 @@
         <el-menu-item index="/personalcenter/tasks">我的任务</el-menu-item>
       </el-menu>
     </el-col>
-    <el-col :offset="1" :span="17">
+    <el-col :offset="1" :span="19">
       <router-view></router-view>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import { getUserInfo } from 'common/js/userinfo'
+
 export default {
   data(){
     return {
@@ -36,5 +38,4 @@ export default {
 </script>
 
 <style lang="stylus">
-
 </style>
