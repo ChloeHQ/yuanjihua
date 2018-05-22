@@ -13,10 +13,11 @@ import favorites from 'components/in-personalcenter/favorites'
 import messages from 'components/in-personalcenter/messages'
 import tasks from 'components/in-personalcenter/tasks'
 import Article from 'components/article/article'
+import ArticleDetail from 'components/article/article-detail'
 
 Vue.use(Router)
 
-export default new Router({
+let router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -26,7 +27,7 @@ export default new Router({
     {
       path: '/index',
       name: 'Index',
-      component: Index
+      component: Index,
     },
     {
       path: '/login',
@@ -41,7 +42,13 @@ export default new Router({
     {
       path: '/article',
       name: 'article',
-      component: Article
+      component: Article,
+      children: [
+      {
+        path: ':id',
+        component: ArticleDetail
+      }
+      ]
     },
     {
       path: '/write',
@@ -51,43 +58,84 @@ export default new Router({
     {
       path: '/personalcenter',
       component: personalcenter,
+      name: 'personalcenter',
+      meta: {requireLogin: true},
       children: [
         {
           path: '',
           name: 'personalcenter',
-          component: profile
+          component: profile,
+          meta: {requireLogin: true}
         },
         {
           path: 'profile',
           name: 'personalcenter-profile',
-          component: profile
+          component: profile,
+          meta: {requireLogin: true}
         },
         {
           path: 'resetpwd',
           name: 'personalcenter-resetpwd',
-          component: resetpwd
+          component: resetpwd,
+          meta: {requireLogin: true}
         },
         {
           path: 'posts',
           name: 'personalcenter-posts',
-          component: posts
+          component: posts,
+          meta: {requireLogin: true}
         },
         {
           path: 'favorites',
           name: 'personalcenter-favorites',
           component: favorites
+          // meta: {requireLogin: true}
         },
         {
           path: 'messages',
           name: 'personalcenter-messages',
-          component: messages
+          component: messages,
+          meta: {requireLogin: true}
         },
         {
           path: 'tasks',
           name: 'personalcenter-tasks',
-          component: tasks
+          component: tasks,
+          meta: {requireLogin: true}
         }
       ]
     }
-  ]
+  ],
+
 })
+
+// router.beforeEach(async (to, from, next) => {
+//   const { name, meta } = to;
+//   const { requireLogin } = meta;
+//   if (name === 'login') {  // 如果是登录页则用next方法resolve掉这个钩子，如果不是，进行到下一个判断
+//     return next();   
+//   }
+//   const needLogin = requireLogin && !window.localStorage.getItem('token');  // 从store中读取是否获取了已登录的信息
+//   if (needLogin) {
+//     return next({   //  如果没有则跳转到登录页，将当前路由路径放到参数中
+//       name: 'login'
+//       // params: { back: to },
+//     });
+//   }
+//   return next();  
+// })
+
+
+router.beforeEach((to, from, next) => {
+  let token = window.localStorage.getItem('token') 
+  if (to.matched.some(record => record.meta.requireLogin) && (!token || token === null)) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+})
+
+export default router
