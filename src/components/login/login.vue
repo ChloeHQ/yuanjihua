@@ -1,24 +1,26 @@
 <template>
-  <el-card class="box-card">
-    <div class="title">
-      <h3>欢迎回到猿计划</h3>
-    </div>
-    <el-form class="form" ref="form" :rules="loginRules" :model="form" >
-      <el-form-item label="" prop="phoneNumber">
-        <el-input v-model="form.phoneNumber" placeholder="请输入登录手机号" ></el-input>
-      </el-form-item>
-      <el-form-item label="" prop="password">
-        <el-input type="password" v-model="form.password" placeholder="6-16位密码，区分大小写，不能使用空格" ></el-input>
-      </el-form-item>
-      <el-form-item class="check">
-        <el-checkbox class="check-box" v-model="form.checked">下次自动登录</el-checkbox>
-        <router-link class="regist" to="/register"><span>立即注册</span></router-link>
-      </el-form-item>
-      <el-form-item class='sub-btn'>
-        <el-button type="primary" @click="submit">登录</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div>
+    <el-card class="box-card">
+      <div class="title">
+        <h3>欢迎回到猿计划</h3>
+      </div>
+      <el-form class="form" ref="form" :rules="loginRules" :model="form" >
+        <el-form-item label="" prop="phoneNumber">
+          <el-input v-model="form.phoneNumber" placeholder="请输入登录手机号" ></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="password">
+          <el-input type="password" v-model="form.password" placeholder="6-16位密码，区分大小写，不能使用空格" ></el-input>
+        </el-form-item>
+        <el-form-item class="check">
+          <el-checkbox class="check-box" v-model="form.checked">下次自动登录</el-checkbox>
+          <router-link class="regist" to="/register"><span>立即注册</span></router-link>
+        </el-form-item>
+        <el-form-item class='sub-btn'>
+          <el-button type="primary" @click="submit">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 
 </template>
 
@@ -43,20 +45,18 @@ export default {
   },
   methods: {
     submit() {
-      // console.log('submit!')
       let params = {
         'mobile': this.form.phoneNumber,
         'pwd': this.form.password
       }
       logIn(params).then((result) => {
-        // console.log(result)
+        console.log(result)
 
         if(result.status === STATUS){
-          // console.log('success')
           let data = result.data[0]
-          
           /*data数据内容
             avatar:"DC8B19B5BD6447A56146B8BB09E85BCC.jpg"
+            length: 8
             mobile:"18271907823"
             nick_name:"默认"
             pwd:"123456"
@@ -65,7 +65,6 @@ export default {
             token:"6D0D287F3049901222103C6FD1DB0D0F"
             user_id:"30"
           */
-
           this.$cookie.set('token', data.token, 30) 
           setUserInfo(data)
           this.$bus.$emit('userLogin', 'ok')
@@ -87,9 +86,10 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   .box-card
-    position: absolute
-    top: 50px
-    left: 50%
+    // position: absolute
+    top: 100px
+    // left: 50%
+    margin-left: 50%
     transform: translateX(-50%)
     width: 360px
     padding: 30px 60px
