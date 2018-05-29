@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getUserInfo } from 'common/js/userinfo'
 
 export const STATUS = 1
-const URL = 'http://www.ftusix.com/static/data/'
+export const URL = 'http://www.ftusix.com/static/data/'
 const uid =  getUserInfo().user_id
 
 export function getMyCollection(params) {
@@ -42,4 +42,21 @@ export function getMyPosts(params) {
 		// console.log(res.data)
 		return Promise.resolve(res.data)
 	})
+}
+
+/*
+更改个人信息
+*/
+export function updateProfile(params) {
+	let url = URL + 'update.php'
+	let defaultPara = {
+        sex: 1,     //  性别
+        nick_name :"默认",   //  昵称
+        token :"",    //  token   用户token
+    }
+    let finally_params = Object.assign({}, defaultPara, params)
+    return axios.post(url, finally_params).then(res => {
+    	console.log(res.data)
+    	return Promise.resolve(res.data)
+    })
 }

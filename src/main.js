@@ -6,7 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import VueCookie from 'vue-cookie'
-
+import store from './store'
 import 'common/style/reset.styl'
 
 Vue.config.productionTip = false
@@ -24,6 +24,7 @@ Object.defineProperties(Vue.prototype, {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 

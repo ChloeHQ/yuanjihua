@@ -3,7 +3,7 @@
    <el-submenu class="submenu" index="1">
       <template slot="title">
         <div class="avatar-box">
-          <img class="avatar" src="./data@3x.png"/>
+          <img class="avatar" :src="avatarsrc"/>
         </div>
       </template>
       <div class="link-box">
@@ -19,9 +19,11 @@
 </template>
 
 <script>
+import { getUserInfo } from 'common/js/userinfo'
   export default {
     data() {
       return {
+        avatarsrc: "http://www.ftusix.com/static/data/upload/" + this.userinfo.avatar,
         activeIndex: '1'
       }
     },
@@ -32,6 +34,9 @@
       iclick() {
         this.$emit('logout')
       }
+    },
+    beforeCreate() {
+      this.userinfo = getUserInfo()
     }
   }
 </script>

@@ -1,0 +1,1 @@
+export const article = state => state.article

@@ -5,6 +5,7 @@ import Index from 'components/index/index'
 import Login from 'components/login/login'
 import Register from 'components/register/register'
 import Write from 'components/write/write'
+import Activity from 'components/activity/activity'
 import personalcenter from 'components/personalcenter'
 import profile from 'components/in-personalcenter/profile'
 import resetpwd from 'components/in-personalcenter/resetpwd'
@@ -30,6 +31,11 @@ let router =  new Router({
       component: Index,
     },
     {
+     path: '/activity',
+      name: 'activity',
+      component: Activity
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
@@ -53,7 +59,8 @@ let router =  new Router({
     {
       path: '/write',
       name: 'write',
-      component: Write
+      component: Write,
+      meta: {requireLogin: true}
     },
     {
       path: '/personalcenter',
@@ -64,44 +71,37 @@ let router =  new Router({
         {
           path: '',
           name: 'personalcenter',
-          component: profile,
-          meta: {requireLogin: true}
+          component: profile
         },
         {
           path: 'profile',
           name: 'personalcenter-profile',
-          component: profile,
-          meta: {requireLogin: true}
+          component: profile
         },
         {
           path: 'resetpwd',
           name: 'personalcenter-resetpwd',
-          component: resetpwd,
-          meta: {requireLogin: true}
+          component: resetpwd
         },
         {
           path: 'posts',
           name: 'personalcenter-posts',
-          component: posts,
-          meta: {requireLogin: true}
+          component: posts
         },
         {
           path: 'favorites',
           name: 'personalcenter-favorites',
           component: favorites
-          // meta: {requireLogin: true}
         },
         {
           path: 'messages',
           name: 'personalcenter-messages',
-          component: messages,
-          meta: {requireLogin: true}
+          component: messages
         },
         {
           path: 'tasks',
           name: 'personalcenter-tasks',
-          component: tasks,
-          meta: {requireLogin: true}
+          component: tasks
         }
       ]
     }

@@ -5,7 +5,9 @@
     </section>
     <div class="replaceHeader"></div>
     <section  class="content">
-		  <router-view class="view"></router-view>
+      <keep-alive>
+		    <router-view class="view"></router-view>
+      </keep-alive>
     </section>
   </div>
 </template>

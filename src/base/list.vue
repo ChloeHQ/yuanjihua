@@ -1,34 +1,35 @@
 <template>
 	<nav>
 		<el-tabs v-model="activeName" @tab-click="handleClick">
-				<el-tab-pane v-for="(item,index) in targets" :key="item.id" :label="item.text" :name="item.text">
-					<div class="hot_post" v-for="item in newList" :key="item.topic_id">
-						<div class="hot_author">
-							<span class="user">
-								{{item.nick_name}}
-							</span>
-							<span class="time">
-								{{unixTime(item.modify_time)}}
-							</span>
-						</div>
+			<el-tab-pane v-for="(item,index) in targets" :key="item.id" :label="item.text" :name="item.text">
+				<div class="hot_post" v-for="item in articleList" :key="item.topic_id">
+					<div class="hot_author">
+						<span class="user">
+							{{item.nick_name}}
+						</span>
+						<span class="time">
+							{{unixTime(item.modify_time)}}
+						</span>
+					</div>
 
-						<a>
-							<div class="hot_title">
-								<div class="topic-title" @click="toDetail(item.topic_id)">{{item.title}}</div>
-								<div class='comment-wrapper'>
-									<div>
-										<i class="iconfont">&#xe61d;</i>
-										<span class='comment' >{{item.comment_num}}</span>
-									</div>
-									<div>
-										<i class='iconfont'>&#xe717;</i>
-										<span class='like'>{{item.like_num}}</span>
-									</div>
+					<a>
+						<div class="hot_title">
+							<div class="topic-title" 
+							@click="selectItem(item)">{{item.title}}</div>
+							<div v-if="showFontIcon" class='comment-wrapper'>
+								<div>
+									<i class="iconfont">&#xe61d;</i>
+									<span class='comment' >{{item.comment_num}}</span>
+								</div>
+								<div>
+									<i class='iconfont'>&#xe717;</i>
+									<span class='like'>{{item.like_num}}</span>
 								</div>
 							</div>
-					</a>
-					</div>
-				</el-tab-pane>
+						</div>
+				</a>
+				</div>
+			</el-tab-pane>
 			</el-tabs>
 		</nav>
 </template>
@@ -53,6 +54,12 @@
 				default: function() {
 					return [];
 				}
+			},
+			showFontIcon:{
+				type: Boolean,
+				default: function(){
+					return true
+				}
 			}
 		}, 
 		computed: {
@@ -61,6 +68,9 @@
 				}
 			},
 		methods: {
+			selectItem(item) {
+				this.$emit('select', item)
+			},
 			handleClick(tab, event) {
 					let categorie = tab.name;
 					let index = 0;
@@ -70,7 +80,7 @@
 							index =item.id
 						}
 					}
-					// console.log(index)
+					this.$emit('typeChanged', index)
 					if(index) {
 						this.newList = this.articleList.filter(item => {
 							return item.type === index.toString()
@@ -82,9 +92,6 @@
 			unixTime(timestamp) {
 				let unixTimestamp = new Date(timestamp * 1000);
 				return unixTimestamp.toLocaleString();
-			},
-			toDetail(item) {
-				alert(item);
 			}
 		}
 	}

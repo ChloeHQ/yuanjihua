@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div v-if="images" class="slider">
-		  	<el-carousel 
-		  	:height="carousel.height" 
+		  	<el-carousel ref = "carousel"
+		  	:height="carousel.height + 'px'"
 		  	:interval="carousel.interval" 
 		  	:type="carousel.card">
 
@@ -14,37 +14,27 @@
 		<!--
 			组件
 		-->
-		<div  v-if="listCount" class="hot-section">
-			<my-list class="hot-nav" :articleList="articleList" :targets="targets">
-			</my-list>
-		</div>
+		<select-list :targets="targets" :params="params" :showFontIcon="showFontIcon">
+			
+		</select-list>
 		
-		<div class="block">
-			<el-pagination  class="el-pagination"
-				background
-  			layout="prev, pager, next">
-			</el-pagination>
-		</div>
-
-		
+		<router-view></router-view>
 	</div>
 </template>
 
 <script type="text/ecmascript-6">
-	import { STATUS,getTopicList } from 'api/article.js'
-	import List from 'base/list1'
-	import MyList from 'base/list'
+	import SelectList from "base/select-list"
 
 	export default {
 		data() {
 			return {
-				// data: [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-				// info:"查询成功"
-				// listCount:["44"]
-				articleList: [],
-				listCount: 0,
-				loaded: false,
-				// activeName: '热门文章',
+				showFontIcon: true,
+				params: {
+					type:0, 
+					sort:"hot",  //排序
+					page:1,   //页码 null则为第一页默认页
+					index:true
+				},
 				targets:[
 					{text:'热门文章',id:0},
 					{text:'html',id:1},
@@ -62,31 +52,19 @@
 				]
 			}
 		},
-		created() {
-	    	//请求默认加载资源
-	    	this._getIndexList()
-	  	},
+	  	mounted () {
+		  this.setSize()
+		  window.addEventListener('resize', ()=> {
+		    this.setSize()
+		  }, false)
+		},
 		methods: {
-			_getIndexList() {
-				let params = {
-					type:0, 
-					sort:"hot",  //排序
-					page:null,   //页码 null则为第一页默认页
-					index:true
-					}
-				getTopicList(params).then((ret) => {
-					if(ret.status === STATUS){
-						// this.articleList = JSON.parse(JSON.stringify(ret));
-						this.articleList = ret.data;
-						this.listCount = ret.listCount[0];
-						console.log(ret);
-					}
-				})
-			}
+			setSize: function () {
+				this.carousel.height = 384 / 1039 * this.$refs.carousel.$el.clientWidth
+	  		}
 		},
 		components: {
-			List,
-			MyList
+			SelectList
 		}
 	}
 </script>
@@ -95,23 +73,12 @@
 .slider
 	position: relative
 	overflow-x: hidden
-	.slide-img
-		width: 100%
-		heigth: 100%
-.hot-section
-	.hot-nav
-		padding: 20px 0
-		overflow: hidden
-		.el-tab-pane
-			.el-tabs__item
-				&.is-active
-					color: red
-	.hot-post
-		padding: 14px 0;
-		border-bottom: 1px solid #ddd
-.block
-	.el-pagination
-		text-align: center
-.el-loading-mask
-	display: none
+	.el-carousel__item
+		.slide-img
+			// position: absolute
+			// left: 50%
+			// top: 50%
+			// transform: translate(-50%, -50%)
+			width: 100%
+			heigth: 100%
 </style>

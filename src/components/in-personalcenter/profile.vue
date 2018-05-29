@@ -1,15 +1,26 @@
 <template>
-    <el-form>
+    <el-form :model="form" size="medium" label-width="80px">
       <el-form-item label="头像">
-        <span></span>
+        <span class="avatar">
+          <!-- <img class="photo" :src="form.photosrc"/> -->
+          <el-upload class='upload' 
+            action='http://www.ftusix.com/static/data/upload.php' 
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :data="{id: userinfo.user_id}">
+          <img v-if="form.photosrc" class="photo" :src="form.photosrc">
+            <span class="reset-text">更换头像</span>
+          </el-upload>
+        </span>
       </el-form-item>
       <el-form-item label="手机号">
         <span>{{ form.phoneNumber}}</span>
       </el-form-item>
       <el-form-item label="昵称">
-        <el-input v-model="form.nickname"></el-input>
+        <el-input v-model="form.nickname"  style="width: 200px;"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="性别">
         <el-radio v-model="form.gender" label="1">男</el-radio>
         <el-radio v-model="form.gender" label="0">女</el-radio>
       </el-form-item>
@@ -20,41 +31,81 @@
 </template>
 
 <script>
-import { getUserInfo } from 'common/js/userinfo'
-import axios from 'axios'
+import { getUserInfo,setUserInfo} from 'common/js/userinfo'
+import { URL,STATUS,updateProfile} from 'api/userCenter'
+
 
 export default {
   data () {
     return {
       form: {
-        nickname: this.userInfo().nickname,
-        gender: this.userInfo().gender,
-        phoneNumber: this.userInfo().phoneNumber
-      }
+        nickname: this.userinfo.nick_name,
+        gender: this.userinfo.sex,
+        phoneNumber: this.userinfo.mobile,
+        photosrc: URL + "upload/" + this.userinfo.avatar
+      },
+      token: this.userinfo.token
     }
   },
   methods: {
-    async onSubmit () {
-      const rawRes = await axios.post('http://yjh.li-shang-bin.com/iweb/Userinfo/update', {
+    onSubmit () {
+      let params = {
         sex: this.form.gender,
-        nick_name: this.form.nickname,
-        token: this.$cookie.get('token')
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      console.log(rawRes.data)
-    },
-    userInfo () {
-      const data = getUserInfo()
-      return {
-        nickname: data.nick_name,
-        phoneNumber: data.mobile,
-        gender: data.sex
+        nick_name : this.form.nickname,
+        token: this.token
       }
+      updateProfile(params).then(data => {
+        let type = 'error'
+        if(data.status === STATUS){
+          this.form = Object.assign({}, this.form, data.data)
+          console.log(data.data)
+          setUserInfo(data.data)
+          type = 'success'
+          }
+        this.$message({
+          message: data.info,
+          showClose: true,
+          type: type
+          })
+        })
+    },
+    beforeAvatarUpload() {
+      alert('hhhhh')
+      // https://lelesbox.github.io/demo/cropper.html
+      // http://xyxiao.cn/vue-cropper/example/
+      // https://github.com/xyxiao001/vue-cropper
+    },
+    handleAvatarSuccess(res) {
+      // console.log(res)
+      let type = 'error'
+      if(res.status === STATUS) {
+        setUserInfo({avatar: res.data})
+        type = 'success'
+      }
+      this.$message({
+        message: res.info,
+        showClose: true,
+        type: type
+      })
     }
+  },
+  beforeCreate() {
+    this.userinfo = getUserInfo()
+    console.log(this.userinfo)
   }
 
 }
 </script>
+
+<style lang="stylus">
+.avatar
+  .upload
+    .photo
+      width: 62px
+      height: 62px
+      border: #d9d9d9 dashed 1px
+      border-radius: 50%
+    .reset-text
+      font-size: 12px
+      vertical-align: bottom
+</style>
