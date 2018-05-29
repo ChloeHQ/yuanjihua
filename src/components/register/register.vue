@@ -1,28 +1,30 @@
 <template>
-  <el-card class="box-card">
-    <div class="title">
-      <h3>注册</h3>
-    </div>
-    <el-form class="form" ref="form" :rules="registrationRules"
-    :model="form" label-width="80px">
-      <el-form-item label="电话号码" prop="phoneNumber">
-        <el-input v-model="form.phoneNumber" placeholder="请输入手机号来注册" ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="form.password" placeholder="6-16位密码，区分大小写，不能使用空格"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPassword">
-        <el-input type="password" v-model="form.confirmPassword" placeholder="请再次输入确认"></el-input>
-      </el-form-item>
-      <el-form-item label="验证码" prop="verificationCode">
-        <el-input v-model="form.verificationCode" placeholder="" class="vcode-input"></el-input>
-        <el-button @click="sendVCode" class="vcode-btn" size="mini" type="success" round>发送验证码</el-button>
-      </el-form-item>
-      <el-form-item label-width="125px">
-        <el-button type="primary" class='sub-btn' @click="registration">注册</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div>
+    <el-card class="box-card">
+      <div class="title">
+        <h3>注册</h3>
+      </div>
+      <el-form class="form" ref="form" :rules="registrationRules"
+      :model="form" label-width="80px">
+        <el-form-item label="电话号码" prop="phoneNumber">
+          <el-input v-model="form.phoneNumber" placeholder="请输入手机号来注册" ></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="form.password" placeholder="6-16位密码，区分大小写，不能使用空格"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input type="password" v-model="form.confirmPassword" placeholder="请再次输入确认"></el-input>
+        </el-form-item>
+        <el-form-item label="验证码" prop="verificationCode">
+          <el-input v-model="form.verificationCode" placeholder="" class="vcode-input"></el-input>
+          <el-button @click="sendVCode" class="vcode-btn" size="mini" type="success" round>发送验证码</el-button>
+        </el-form-item>
+        <el-form-item label-width="125px">
+          <el-button type="primary" class='sub-btn' @click="registration">注册</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -120,9 +122,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   .box-card
-    position: absolute
-    top: 50px
-    left: 50%
+    margin-left: 50%
     transform: translateX(-50%)
     width: 360px
     padding: 30px 60px
