@@ -48,7 +48,7 @@
 					type: 'card'
 				},
 				images: [
-					// 'http://oz572skeg.bkt.clouddn.com/%E7%AE%80%E5%8E%86banne-1.jpg',
+					'http://oz572skeg.bkt.clouddn.com/%E7%AE%80%E5%8E%86banne-1.jpg',
 					'http://oz572skeg.bkt.clouddn.com/%E6%AF%94%E5%8F%AF%E6%80%9D%E8%AE%AEbanne-2.jpg'
 				]
 			}

@@ -110,6 +110,8 @@ let router =  new Router({
 
 })
 
+if (process.env.NODE_ENV === "production") router.base = window.location.pathname
+
 // router.beforeEach(async (to, from, next) => {
 //   const { name, meta } = to;
 //   const { requireLogin } = meta;
