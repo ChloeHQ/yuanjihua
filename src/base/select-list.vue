@@ -2,8 +2,12 @@
 	<div class="select-list">
 		<div  v-if="listCount" class="hot-section">
 			<my-list @select="selectArticle" @typeChanged="changeType" class="hot-nav" :articleList="articleList" :targets="targets" :showFontIcon="showFontIcon">
-
-				<slot></slot>
+				<!-- 插槽中的内容——排序方法 -->
+				<div v-if="showSortTab" slot="sort">
+					<ul class="label-list">
+						<li v-for="(item, key) in sortType" :key="key" @click="selectSortType(key)"><span> </span><a :class="{selected: (selectedSort===key) }">{{ item }}</a></li>
+					</ul>
+				</div>
 			</my-list>
 		</div>
 		
@@ -31,8 +35,9 @@
 		data(){
 			return{
 				articleList: [],
-				listCount: 0
-
+				listCount: 0,
+				sortType: ["hot","new"],
+				selectedSort: 0
 			}
 		},
 		props: {
@@ -52,6 +57,12 @@
 				type: Boolean,
 				default: function(){
 					return true;
+				}
+			},
+			showSortTab: {
+				type: Boolean,
+				default: function(){
+					return false;
 				}
 			}
 		},
@@ -74,6 +85,16 @@
 			}
 		},
 		methods: {
+			selectSortType(key) {
+				console.log(key)
+				this.selectedSort = key
+				this.params.sort = this.sortType[key]
+				if(this.params.page == 1){
+	  				this._getIndexList(this.params)
+	  			}else{
+	  				this.params.page = 1;
+	  			}
+			},
 	  		changeType(index){
 	  			this.params.type = index;
 	  			if(this.params.page == 1){
@@ -131,6 +152,29 @@
 			.el-tabs__item
 				&.is-active
 					color: red
+		.label-list
+			display: flex
+			list-style: none
+			margin: 10px auto
+			li
+				padding: 10px
+				cursor: pointer
+				margin-right: 20px
+				span
+					display: inline-block
+					width: 10px
+					height: 10px
+					margin-right: 10px
+				a
+					padding: 5px 10px
+					&.selected
+						background: #F96D89
+						color: white
+				&:first-of-type span
+					background: #259a25
+				&:last-of-type span
+					background: #9c2698
+			
 	.hot-post
 		padding: 14px 0;
 		border-bottom: 1px solid #ddd

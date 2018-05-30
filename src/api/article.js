@@ -16,7 +16,7 @@ export function getTopicList(params) {
 		      params: data
 		    }).then(res => {
 		     return Promise.resolve(res.data)
-		    })
+    })
 }
 
 export function postArticle(params) {

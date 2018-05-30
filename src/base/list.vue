@@ -1,7 +1,10 @@
 <template>
 	<nav>
 		<el-tabs v-model="activeName" @tab-click="handleClick">
+			
+			<slot name="sort"></slot>
 			<el-tab-pane v-for="(item,index) in targets" :key="item.id" :label="item.text" :name="item.text">
+				<!-- 文章列表 -->
 				<div class="hot_post" v-for="item in articleList" :key="item.topic_id">
 					<div class="hot_author">
 						<span class="user">
@@ -27,7 +30,7 @@
 								</div>
 							</div>
 						</div>
-				</a>
+					</a>
 				</div>
 			</el-tab-pane>
 			</el-tabs>

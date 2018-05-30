@@ -1,16 +1,7 @@
 <template>
 	<div class="article">
-		<!-- 小方格样式 -->
-		<!-- <list :articleList="articleList" :targets="tech_type">
-			<div>
-				<ul class="label-list">
-					<li v-for="item in tech_type"><span> </span><a>{{ item.text }}</a></li>
-				</ul>
-			</div>
-		</list> -->
-		<select-list :targets="tech_type" :params="params" :showFontIcon="showFontIcon">
+		<select-list :targets="tech_type" :params="params" :showFontIcon="showFontIcon" :showSortTab="showSortTab">
 		</select-list>
-
 		<router-view></router-view>
 	</div>
 </template>
@@ -33,7 +24,9 @@
 					{text:'经验分享',id:1},
 					{text:'入门学习',id:2},
 					{text:'成果分享',id:3}
-				]
+				],
+				showFontIcon: false,
+				showSortTab: true
 			}
 		},
 		components: {
@@ -43,28 +36,5 @@
 </script>
 
 <style lang="stylus" scoped>
-	.label-list
-		display: flex
-		list-style: none
-		margin: 10px auto
-		li
-			padding: 10px
-			cursor: pointer
-			margin-right: 20px
-			span
-				display: inline-block
-				width: 10px
-				height: 10px
-				margin-right: 10px
-			a:active
-				color: red
-			&:first-of-type span
-				background: #259a25
-			&:nth-of-type(2) span
-				background: #259d94
-			&:nth-of-type(3) span
-				background: #26719b
-			&:last-of-type span
-				background: #9c2698
-			
+
 </style>
