@@ -1,6 +1,6 @@
 <template>
 	<div class="tab">
-		<router-link tag="div" class="tag-item" to="/message">
+		<router-link tag="div" class="tag-item" to="/personalcenter/messages" @click.native="toMessages">
 			<span class="tab-link">未读消息</span>
 		</router-link>
 		<router-link tag="div" class="tag-item" to="/index" exact>
@@ -53,6 +53,9 @@
 	   	 	this.$bus.$off('userLogin', this._handleLoginEvent)
 	  	},
 		methods: {
+			toMessages() {
+				this.$bus.$emit('centerPageTo', '/personalcenter/messages')
+			},
 			toPersonCenter(path) {
 				console.log('parent', path)
 				this.$router.push(path)

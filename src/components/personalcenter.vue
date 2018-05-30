@@ -31,7 +31,8 @@ export default {
   created() {
     this.$bus.$on('centerPageTo', (eventData) => {
       this.activeIndex = eventData
-    })
+    }),
+    console.log(this.$route)
   }
 
 }

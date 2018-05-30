@@ -17,8 +17,9 @@
 		<select-list :targets="targets" :params="params" :showFontIcon="showFontIcon">
 			
 		</select-list>
-		
-		<router-view></router-view>
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
 	</div>
 </template>
 

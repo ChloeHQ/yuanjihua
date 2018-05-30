@@ -67,6 +67,7 @@ let router =  new Router({
       component: personalcenter,
       name: 'personalcenter',
       meta: {requireLogin: true},
+      redirect: '/profile',
       children: [
         {
           path: '',

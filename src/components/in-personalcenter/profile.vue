@@ -80,6 +80,7 @@ export default {
       let type = 'error'
       if(res.status === STATUS) {
         setUserInfo({avatar: res.data})
+        this.form.photosrc = URL + "upload/" + res.data
         type = 'success'
       }
       this.$message({
