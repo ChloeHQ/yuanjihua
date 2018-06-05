@@ -2,7 +2,7 @@
 	<nav>
 		<el-tabs v-model="activeName" @tab-click="handleClick">
 			
-			<slot name="sort"></slot>
+			<slot name="sort" :todo="xixi"></slot>
 			<el-tab-pane v-for="(item,index) in targets" :key="item.id" :label="item.text" :name="item.text">
 				<!-- 文章列表 -->
 				<div class="hot_post" v-for="item in articleList" :key="item.topic_id">
@@ -41,6 +41,7 @@
 	export default {
 		data() {
 			return {
+				xixi: 'xixi',
 				activeName: this.targets[0].text,
 				newList: this.articleList
 			}

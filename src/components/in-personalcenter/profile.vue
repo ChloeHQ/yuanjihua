@@ -9,9 +9,10 @@
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
             :data="{id: userinfo.user_id}">
-          <img v-if="form.photosrc" class="photo" :src="form.photosrc">
+            <img v-if="form.photosrc" class="photo" :src="form.photosrc">
             <span class="reset-text">更换头像</span>
           </el-upload>
+
         </span>
       </el-form-item>
       <el-form-item label="手机号">
@@ -27,17 +28,27 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交</el-button>
       </el-form-item>
+      
+      <myimgcut 
+      :prewidth="canvas.width"
+      :uploadurl = "canvas.uploadUrl"
+      >  
+      </myimgcut>
     </el-form>
 </template>
 
 <script>
 import { getUserInfo,setUserInfo} from 'common/js/userinfo'
 import { URL,STATUS,updateProfile} from 'api/userCenter'
-
+import myimgcut from 'base/image-cut/avatar-cut'
 
 export default {
   data () {
     return {
+      canvas: {
+        width: 600,
+        uploadUrl: 'http://www.ftusix.com/static/data/upload.php'
+      },
       form: {
         nickname: this.userinfo.nick_name,
         gender: this.userinfo.sex,
@@ -45,6 +56,10 @@ export default {
         photosrc: URL + "upload/" + this.userinfo.avatar
       },
       token: this.userinfo.token
+      // imgCropperData: {
+      //   accept: 'image/gif, image/jpeg, img/png',
+      //   imgSrc: ''
+      // }
     }
   },
   methods: {
@@ -93,6 +108,9 @@ export default {
   beforeCreate() {
     this.userinfo = getUserInfo()
     console.log(this.userinfo)
+  },
+  components: {
+    myimgcut
   }
 
 }

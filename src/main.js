@@ -8,7 +8,6 @@ import router from './router'
 import VueCookie from 'vue-cookie'
 import store from './store'
 import 'common/style/reset.styl'
-
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueCookie)

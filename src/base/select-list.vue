@@ -3,9 +3,9 @@
 		<div  v-if="listCount" class="hot-section">
 			<my-list @select="selectArticle" @typeChanged="changeType" class="hot-nav" :articleList="articleList" :targets="targets" :showFontIcon="showFontIcon">
 				<!-- 插槽中的内容——排序方法 -->
-				<div v-if="showSortTab" slot="sort">
+				<div v-if="showSortTab" slot="sort" slot-scope="slotProps">
 					<ul class="label-list">
-						<li v-for="(item, key) in sortType" :key="key" @click="selectSortType(key)"><span> </span><a :class="{selected: (selectedSort===key) }">{{ item }}</a></li>
+						<li v-for="(item, key) in sortType" :key="key" @click="selectSortType(key)"><span> </span><a :class="{selected: (selectedSort===key) }">{{ slotProps.todo }}</a></li>
 					</ul>
 				</div>
 			</my-list>
